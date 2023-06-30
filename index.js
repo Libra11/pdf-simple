@@ -1,14 +1,14 @@
 /*
  * @Author: Libra
  * @Date: 2021-07-07 19:34:54
- * @LastEditTime: 2022-10-11 13:48:18
+ * @LastEditTime: 2023-03-22 18:34:16
  * @LastEditors: Libra
  * @Description:
- * @FilePath: /binance-bot/index2.js
+ * @FilePath: /pdf-simple/index.js
  */
 // const puppeteer = require("puppeteer");
 const { PDFDocument } = require('pdf-lib')
-const { chromium, firefox, webkit } = require('@playwright/test');
+const { chromium, firefox, webkit } = require('playwright');
 const fs = require('fs')
 
 const waitTillHTMLRendered = async (page, timeout = 30000) => {
@@ -199,22 +199,22 @@ style="
 // playwright
 (async () => {
   const browser = await chromium.launch();  // Or 'firefox' or 'webkit'.
-  const url = "http://localhost:9527/#/measure/report/reportNewTarget/6320509badca190013ec4230/123/eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxODMxMTAyMjM4NiIsImV4cCI6MTY2NjA3MDg0MSwiY2xhaW1zIjoiVVVJRCM2MTMwYWJmMzBkZThlYTJlZjg3MGY1MjQjNjEzMGFjMTEwZGU4ZWEyZWY4NzBmNTMyLHJfZW50X2FkbWluLHJfZXZhX2FkbWluLHJfbWVldCwifQ.LvlINkZM1lLEkuQHQ_vaMWJuiWBpx5byOQUJKu2chZ1EZiwWxwve4kWvqa06IBuE1ZJtVn68f2z4pwOXmkX7fw?proId=123&candidateUuid=6320509badca190013ec4230"
-  // const url = "http://sys.iguokao.com//#/measure/report/reportNewTarget/620e156eddca2b001a9a1167/61a73726e8e58065c39286a6/eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxODAxMDAwMDAwMSIsImV4cCI6MTY0NTc2MjA1NSwiY2xhaW1zIjoiVVVJRCM2MTRkODgyODJiYzFjNDFiYTFlYTZlNDAjNjE0ZDg4NjUyYmMxYzQxYmExZWE2ZTQyLHJfZW50X2FkbWluLHJfZXZhbHVhdGlvbl9hZG1pbiwifQ.IUBLivn0N2j8rDeK1piTH36tIMBxsueKQOI9ekXHhiEp4Xw2DvHvM9X4CmC1m2goDH0FE2uuvJCEEgKylp9b1g?proId=61a73726e8e58065c39286a6&candidateUuid=620e156eddca2b001a9a1167"
+  const url = "https://conch-admin.stac.fun/#/offline/admission/ticket/767c34e3a99a4597abca967584cde678"
   const page = await browser.newPage();
   await page.goto(url, {
       waitUntil: "networkidle",
       timeout: 600000
     });
     await waitTillHTMLRendered(page);
-    const cover_buffer = await exportBuffer(page, false);
-    await page.addStyleTag({
-      content: "#cover {display:none}"
-    })
-    const content_buffer = await exportBuffer(page);
-    await mergeBuffer(cover_buffer, content_buffer);
-    await browser.close();
-  await browser.close();
+    // await page.waitForSelector("#cover")
+    // const cover_buffer = await exportBuffer(page, false);
+    // await page.addStyleTag({
+    //   content: "#cover {display:none}"
+    // })
+    // const content_buffer = await exportBuffer(page);
+    // await mergeBuffer(cover_buffer, content_buffer);
+    // await browser.close();
+    await exportPDF(page)
 })();
 // 导出pdf
 async function exportPDF(page) {
@@ -222,7 +222,7 @@ async function exportPDF(page) {
     path: `h1.pdf`, format: "a4" , 
     printBackground: true,
     '-webkit-print-color-adjust': 'exact',
-    displayHeaderFooter: true,
+    displayHeaderFooter: false,
     headerTemplate,
     footerTemplate,
     margin: {

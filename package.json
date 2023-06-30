@@ -6,6 +6,7 @@
   "dependencies": {
     "@playwright/test": "^1.17.1",
     "pdf-lib": "^1.17.1",
+    "playwright": "1.17.1",
     "puppeteer": "^10.4.0"
   }
 }
